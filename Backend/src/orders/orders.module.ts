@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
 
+import { AuthModule } from '../auth/auth.module';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { Order } from './entities/order.entity';
@@ -14,6 +16,12 @@ import { Product } from '../products/entities/product.entity';
       OrderItem,
       Product,
     ]),
+
+    AuthModule,
+
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
   ],
   controllers: [OrdersController],
   providers: [OrdersService],
