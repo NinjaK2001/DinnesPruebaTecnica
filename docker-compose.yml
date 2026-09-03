@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: dinnes-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dinnes
+      POSTGRES_USER: dinnes
+      POSTGRES_PASSWORD: dinnes_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
