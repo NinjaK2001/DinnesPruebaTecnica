@@ -13,6 +13,9 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ unique: true, nullable: true })
+  external_order_number: string;
+
   @Column()
   date: Date;
 
