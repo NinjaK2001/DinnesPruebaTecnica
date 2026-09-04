@@ -29,6 +29,7 @@ postgres_data/
 
 #Etl
 Etl/.venv/
+Etl/output/
 
 #Typescript build cache
 *.tsbuildinfo
