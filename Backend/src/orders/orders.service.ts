@@ -14,6 +14,25 @@ import { CreateOrderDto } from './dto/create-order.dto';
 export class OrdersService {
   constructor(private readonly dataSource: DataSource) {}
 
+  async findTopProducts(from: string, to: string) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(from ?? '') || !/^\d{4}-\d{2}-\d{2}$/.test(to ?? '')) {
+      throw new BadRequestException(
+        'from y to deben tener formato YYYY-MM-DD',
+      );
+    }
+
+    if (from > to) {
+      throw new BadRequestException(
+        'from no puede ser posterior a to',
+      );
+    }
+
+    return this.dataSource.query(
+      'SELECT * FROM top_selling_products($1::date, $2::date, $3)',
+      [from, to, 5],
+    );
+  }
+
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     return this.dataSource.transaction(async (manager) => {
       const order = manager.create(Order, {

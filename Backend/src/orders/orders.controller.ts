@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 
@@ -17,5 +19,13 @@ export class OrdersController {
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
+  }
+
+  @Get('reports/top-products')
+  topProducts(
+    @Query('from') from: string,
+    @Query('to') to: string,
+  ) {
+    return this.ordersService.findTopProducts(from, to);
   }
 }
